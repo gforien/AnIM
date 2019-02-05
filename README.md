@@ -47,5 +47,5 @@ Détection du contenu à l’aide des méthodes de traitement d’images et d’
     $ git stash pop                                           # restaure fichier1
 
 ##
-###### Antoine BALLIET, Tom LE TUTOUR, Gabriel FORIEN, Charles ZHAO, Barış Sayıl <br/>PIR n°1<br/>3TC INSA Lyon
+###### Antoine BALLIET, Tom LE TUTOUR, Gabriel FORIEN, Charles ZHAO, Barış SAYIL <br/>PIR n°1<br/>3TC INSA Lyon
 ![Logo INSA Lyon](https://upload.wikimedia.org/wikipedia/commons/b/b9/Logo_INSA_Lyon_%282014%29.svg)
