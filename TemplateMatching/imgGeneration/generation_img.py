@@ -11,7 +11,7 @@ from skimage.draw import (line, polygon, circle,
                           ellipse, ellipse_perimeter,
                           bezier_curve)
 
-path = ""
+path = os.getcwd()+"/circles/"
 try:  
     os.mkdir(path)
 except OSError:  
