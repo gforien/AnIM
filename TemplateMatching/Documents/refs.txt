@@ -1,2 +1,4 @@
 https://en.wikipedia.org/wiki/Computational_anatomy#The_deformable_template_orbit_model_of_computational_anatomy
 https://icm.jhu.edu/research-areas-2/computational-anatomy/
+http://scikit-image.org/docs/dev/auto_examples/transform/plot_matching.html
+https://en.wikipedia.org/wiki/Image_registration#Spatial_vs_frequency_domain_methods
