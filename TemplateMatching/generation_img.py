@@ -4,6 +4,7 @@
 import os
 import random
 import numpy as np
+import pandas
 import matplotlib.pyplot as plt
 from skimage.io import imsave as save
 from skimage.draw import (line, polygon, circle,
@@ -24,12 +25,26 @@ except OSError:
 
 corruption=0.2#for corrupting randomly, must be between 0.0 and 1.0
 i=0
+
+listPosx = []
+listPosy = []
+
 for i in range(100):    
     img = np.zeros((500, 500), dtype=np.int16)
     # fill circle
-    rr, cc = circle(random.randint(0,500), random.randint(0,500), 50+random.randint(-3,3), img.shape)
+    posx = random.randint(0,500)
+    posy = random.randint(0,500)
+    listPosx.append(posx)
+    listPosy.append(posy)
+    rr, cc = circle(posy, posx , 50+random.randint(-3,3), img.shape)
     img[rr, cc] =255
     save(pathCircle+"/circles"+str(i)+".jpg", img)
+
+listIndex = [i for i in range(100)]
+df = pandas.DataFrame({"posx": listPosx, "posy": listPosy}, listIndex)
+df.to_csv("./circle.csv", sep=',',index=False)
+
+
 
 
 for j in range(100):
