@@ -30,7 +30,7 @@ listPosx = []
 listPosy = []
 
 for i in range(100):    
-    img = np.zeros((500, 500), dtype=np.int16)
+    img = np.zeros((512, 512), dtype=np.int16)
     # fill circle
     posx = random.randint(0,500)
     posy = random.randint(0,500)
