@@ -4,11 +4,10 @@
 import nibabel as nib
 import numpy as np
 import os
-import cv2
 from multiprocessing import Process
 from scipy.ndimage import gaussian_filter
-segpath="/home/tom/Documents/docPIR/visceral/segmentations/CTce_ThAb/"
-fullpath="/home/tom/Documents/docPIR/visceral/volumes/CTce_ThAb"
+segpath="/media/tom/TOSHIBA EXT/visceral/segmentations/CTce_ThAb/"
+fullpath="/media/tom/TOSHIBA EXT/visceral/volumes/CTce_ThAb"
 recep_path="/media/tom/TOSHIBA EXT"
 segfiles = os.listdir( segpath )#list of all files in working dir
 typicalfilename="10000100_1_CTce_ThAb_2_0.nii.gz"
