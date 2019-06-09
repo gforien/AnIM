@@ -113,11 +113,5 @@ def make_templates(excluded_patient):
         print("done with ",classe)
 
 if __name__=="__main__":
-    processes=[]
     for patient in patients:
-        p=Process(target=make_templates,args=(patient,))
-        #make_templates(patient)
-        processes.append(p)
-        p.start()
-    for process in processes:
-        process.join()
+        make_templates(patient)
