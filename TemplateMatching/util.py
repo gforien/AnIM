@@ -16,55 +16,6 @@ import gc
 from templateMaker import bbox2_3D,broadcast_2d,broadcast_3d,get_patient
 
 
-def shotgun(image,template,factor):
-    print("shotgun loading...")
-    dim_factor=(factor ,factor,factor)
-    print("image shape",image.shape)
-    print("template shape",template.shape)
-    resized_image=downscale_local_mean(image,(factor,factor,factor))
-    resized_template=downscale_local_mean(template,(factor,factor,factor))
-    print("resized image shape",resized_image.shape)
-    print("resized template shape",resized_template.shape)
-    nxcorr=fft_nxcorr(resized_image,resized_template)
-    print("first shot taken !")
-    maxind=np.unravel_index(np.argmax(nxcorr, axis=None), nxcorr.shape)
-    print("corr max is ",np.amax(nxcorr))
-    print("at",maxind)
-    relative_index=(maxind[0]/resized_image.shape[0],
-                    maxind[1]/resized_image.shape[1],
-                    maxind[2]/resized_image.shape[2])
-    display_ind = (int(relative_index[0] * resized_image.shape[0]),
-                    int(relative_index[1] * resized_image.shape[1]),
-                    int(relative_index[2] * resized_image.shape[2]))
-    display_square(resized_image,resized_template.shape,display_ind)
-    abs_ind=(int(relative_index[0]*image.shape[0]),
-             int(relative_index[1]*image.shape[1]),
-             int(relative_index[2]*image.shape[2]))
-    print("absolute index is ",abs_ind)
-
-    sigma = 5
-    del (resized_image)
-    del (resized_template)
-    del (nxcorr)
-    gc.collect()
-    xinf, xsup = abs_ind[0] - int(sigma * image.shape[0] / 2), abs_ind[0] + int(sigma * image.shape[0] / 2)
-    yinf, ysup = abs_ind[1] - int(sigma * image.shape[1] / 2), abs_ind[1] + int(sigma * image.shape[1] / 2)
-    zinf, zsup = abs_ind[2] - int(sigma * image.shape[2] / 2), abs_ind[2] + int(sigma * image.shape[2] / 2)
-    # We readjust the border just in case
-    if xinf < 0: xinf = 0
-    if yinf < 0: yinf = 0
-    if zinf < 0: zinf = 0
-    if xsup > image.shape[0]: xsup = image.shape[0] - 1
-    if ysup > image.shape[1]: xsup = image.shape[1] - 1
-    if zsup > image.shape[2]: xsup = image.shape[2] - 1
-    print("RoI shape",image[xinf:xsup,yinf:ysup,zinf:zsup].shape)
-    nxcorr = fft_nxcorr(image[xinf:xsup,yinf:ysup,zinf:zsup], template)
-    maxind = np.unravel_index(np.argmax(nxcorr, axis=None), nxcorr.shape)
-    print("second bam !")
-    print("corr max is ", np.amax(nxcorr))
-    print("at", maxind)
-    return maxind
-
 def display_square(image,tshape, maxind,solution=None):
     x_t,y_t,z_t=tshape
     fig, [ax1 , ax2 , ax3] = plt.subplots(1, 3, num='Result of Template Search')
@@ -258,8 +209,8 @@ def fft_nxcorr(f,t,array=None,i=None):
 
 
 
-def load_images(fullpath='/media/tom/TOSHIBA EXT/visceral/volumes/CTce_ThAb/10000108_1_CTce_ThAb.nii.gz'
-                ,templatepath='/media/tom/TOSHIBA EXT/PIR/108/1302.nii.gz'):
+def load_images(fullpath='/media/tom/TOSHIBA EXT/visceral/volumes/CTce_ThAb/10000131_1_CTce_ThAb.nii.gz'
+                ,templatepath='/media/tom/TOSHIBA EXT/PIR/131/1302.nii.gz'):
     print("loading image", fullpath)
     image = nib.load(fullpath)
     print("loading template", templatepath)

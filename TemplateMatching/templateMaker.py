@@ -11,6 +11,7 @@ fullpath="/media/tom/TOSHIBA EXT/visceral/volumes/CTce_ThAb"
 recep_path="/media/tom/TOSHIBA EXT"
 segfiles = os.listdir( segpath )#list of all files in working dir
 typicalfilename="10000100_1_CTce_ThAb_2_0.nii.gz"
+
 classtolabel={
     1247:"trachea",
     1302:"right lung",
@@ -33,9 +34,11 @@ classtolabel={
     7578:"thyroid gland",
     86:"spleen"
 }
-patients=["100","104","105","106","108","109","110","111","112","113","127","128","129","130","131","132","133","134","135","136"]
+patients=["100","104","105","106","108","109","110","111","112","113","127","128","130","131","132","133","134","135","136"]
 #patients=["100","104","105","106","108"]
-classes=["58","1302","1247","1326","170","187" ,"237","2473" ,"29193" ,"29662" ,"29663" ,"30324" ,"30325" ,"32248" ,"32249" ,"40357" ,"40358" ,"480"  ,"7578" ,"86"]
+patients_to_redo=["131","132","133","134","135","136"]
+#classes=["58","1302","1247","1326","170","187" ,"237","2473" ,"29193" ,"29662" ,"29663" ,"30324" ,"30325" ,"32248" ,"32249" ,"40357" ,"40358" ,"480"  ,"7578" ,"86"]
+classes=["58","1302","29193"]
 #classes=["1302","1247","1326","170"]
 #classes=["58"]
 
@@ -126,6 +129,7 @@ def make_templates(excluded_patient):
         sumofall=np.dot(1/nb,sumofall)
         affine_sum = np.dot(1 / nb, affine_sum)
         sumofall=gaussian_filter(sumofall, sigma=5)
+        sumofall=bbox2_3D(sumofall)
         path_to_save=os.path.join('/media/tom/TOSHIBA EXT/PIR',excluded_patient,classe+'.nii.gz')
         img = nib.Nifti1Image(sumofall, affine_sum)
         img.to_filename(path_to_save)
@@ -184,8 +188,8 @@ def as_segmentation(excluded_patient):
         #nib.save(sumofall,path_to_save )
         print("done with ",classe)
 if __name__=="__main__":
-    for patient in patients:
-        #make_templates(patient)
+    for patient in patients_to_redo:
+        make_templates(patient)
         #exact_specific()
-        pass
-    as_segmentation(100)
+    #as_segmentation(100)
+    #make_templates(100)
